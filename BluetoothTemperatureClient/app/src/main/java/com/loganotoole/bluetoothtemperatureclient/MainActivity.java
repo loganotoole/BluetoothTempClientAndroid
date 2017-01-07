@@ -9,15 +9,18 @@ import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private static BluetoothAdapter bTAdapter;
+    private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mTextView = (TextView)findViewById(R.id.devices_list);
         init();
     }
 
@@ -41,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
             //if (BluetoothDevice.ACTION_FOUND.equals(action)) {
             Log.d("DEVICELIST", "Bluetooth device found\n");
             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+            if(device != null) {
+                mTextView.append(device.getAddress() + "\n");
+            }
+
             // Create a new device item
             //DeviceItem newDevice = new DeviceItem(device.getName(), device.getAddress(), "false");
             // Add it to our adapter
